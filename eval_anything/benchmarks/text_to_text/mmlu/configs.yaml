@@ -224,8 +224,8 @@ metrics:
     args:
 
 overall_metrics:
-  - name: null
-    function: null
+  - name: avearage
+    function: average_across_tasks
     args:
       null
   

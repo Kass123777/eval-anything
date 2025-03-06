@@ -25,9 +25,9 @@
       }
     # Num shot
     n_shot: {
-      #"gsm8k": 5,
-      "mmlu": 0,
-      "HumanEval": 0
+       #"gsm8k": 5,
+       "mmlu": 0,
+       "HumanEval": 0
       }
     # Chain of thought
     cot: {
@@ -62,7 +62,7 @@
     # Top-P
     top_p: 0.95
     # Temperature
-    temperature: 0.1
+    temperature: 0.
     # Prompt Logprobs
     prompt_logprobs: 0
     # Logprobs

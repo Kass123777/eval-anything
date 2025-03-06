@@ -8,7 +8,7 @@ from eval_anything.utils.data_type import InferenceInput, InferenceOutput, Evalu
 from eval_anything.models.base_model import MODEL_MAP, CLASS_MAP
 from eval_anything.evaluate_tools.t2t_tools import *
 import eval_anything.evaluate_tools.t2t_tools as T2T_TOOLS
-from eval_anything.evaluate_tools.metrics import MetricCalculator
+from eval_anything.evaluate_tools.metrics import MetricCalculator, OverallMetricCalculator
 from eval_anything.utils.utils import (
     UUIDGenerator, read_cfgs_from_yaml, update_dict, 
     custom_cfgs_to_dict, BENCHMARK_MODALITY_MAP, pair_data_via_uuid,
@@ -174,6 +174,16 @@ class BaseBenchmark(ABC):
         metric_calculator = MetricCalculator(metrics_list, judge_method)
         evaluation_results = metric_calculator(evaluation_details)
         return evaluation_details, evaluation_results
+    
+    def calculate_overall_metrics(self, overall_metrics: list[namedtuple], result: dict[str, dict[str, float]]) -> dict[str, float]:
+        """Calculate overall metrics
+        Args:
+            overall_metrics (list[namedtuple]): overall metrics
+            result (dict[str, dict[str, float]]): evaluation results
+        """
+        overall_metric_calculator = OverallMetricCalculator(overall_metrics)
+        overall_result = overall_metric_calculator(result)
+        return overall_result
 
     def get_ref_answer(self, input_data: list[InferenceInput], inference_outputs: list[InferenceOutput]) -> list[any]:
         """Get reference answers from input data

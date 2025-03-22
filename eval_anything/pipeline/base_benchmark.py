@@ -79,7 +79,7 @@ class BaseBenchmark(ABC):
         
         input_list = [item for _, inference_input in input_dict.items() for item in inference_input]
         
-        input_batch_size = 500
+        input_batch_size = 5
         input_data_batches = [input_list[i:i+input_batch_size] for i in range(0, len(input_list), input_batch_size)]
         inference_outputs = []
         for input_data_batch in input_data_batches:

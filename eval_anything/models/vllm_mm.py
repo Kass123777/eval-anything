@@ -11,7 +11,7 @@ from vllm.utils import cuda_device_count_stateless
 from eval_anything.utils.data_type import InferenceInput, InferenceOutput
 from eval_anything.utils.register import TemplateRegistry
 from eval_anything.models.base_model import BaseModel
-from eval_anything.utils.mm_data_manager import ImageManager
+from eval_anything.utils.mm_data_manager import ImageManager, AudioManager, VideoManager
 from transformers import AutoProcessor
 
 class vllmMM(BaseModel):
@@ -63,7 +63,7 @@ class vllmMM(BaseModel):
             tensor_parallel_size=self.llm_tensor_parallel_size,
             gpu_memory_utilization=self.llm_gpu_memory_utilization,
             # TODO: Add parameters for limit_mm_per_prompt
-            limit_mm_per_prompt={"image": 8},
+            limit_mm_per_prompt={"image": 8, "audio": 8, "video": 8},
         )
         self.processor = AutoProcessor.from_pretrained(self.model_name_or_path)
 
@@ -81,25 +81,45 @@ class vllmMM(BaseModel):
         """
 
         # TODO： Generalize the generation process for different modalities
-    
+        # For image
+        # vllm_inputs = []
+        # for input in input_list:
+        #     prompt = self.processor.apply_chat_template(input.conversation, add_generation_prompt=True)
+        #     images = ImageManager.extract_images_from_conversation(input.conversation)
+        #     vllm_inputs.append({
+        #         "prompt": prompt,
+        #         "multi_modal_data": {'image': images},
+        #     })
+
+        # For audio
+        # vllm_inputs = []
+        # for input in input_list:
+        #     prompt = self.processor.apply_chat_template(input.conversation, add_generation_prompt=True)
+        #     audios = AudioManager.extract_audios_from_conversation(input.conversation)
+        #     vllm_inputs.append({
+        #         "prompt": prompt,
+        #         "multi_modal_data": {'audio': audios},
+        #     })
+
+        # For video
         vllm_inputs = []
         for input in input_list:
             prompt = self.processor.apply_chat_template(input.conversation, add_generation_prompt=True)
-            images = ImageManager.extract_images_from_conversation(input.conversation)
+            videos, video_kwargs = VideoManager.extract_videos_from_conversation(input.conversation)
             vllm_inputs.append({
                 "prompt": prompt,
-                "multi_modal_data": {'image': images},
+                "multi_modal_data": {'video': videos},
+                "mm_processor_kwargs": video_kwargs,
             })
-            
+
         outputs = self.model.generate(
             prompts=vllm_inputs, sampling_params=self.samplingparams
         )
-      
+        raise NotImplementedError("TODO： Generalize the generation process for different modalities")
         inference_outputs = [
             InferenceOutput.from_vllm_output(task=input.task, uuid=input.uuid, vllm_output=output, store_raw=True)
             for input, output in zip(input_list, outputs)
         ]
-
 
         return inference_outputs
     

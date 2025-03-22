@@ -1,0 +1,41 @@
+dataset:
+  name: mmau
+  path: AudioLLMs/MMAU-mini
+  split: test
+  size: 
+  modality: text-audio-to-text
+  fewshot_data_path: null
+  fewshot_data_name: null
+  fewshot_data_split: null
+  cot_fewshot_data_path: null
+  cot_fewshot_data_name: null
+  cot_fewshot_data_split: null
+  max_shot: 0
+  default_task_list: ["MMAU-mini"]
+task_defaults: &task_defaults
+  type: MultiChoice
+  question_key: question
+  answer_key: options
+  ground_truth_key: answer
+  candidate_labels: ["A", "B", "C", "D", "E"]
+  avalable_evaluate_tools: ["match_multi-choice_and_open-ended"]
+task: 
+  - name: MMAU-mini
+    data_files: null
+    <<: *task_defaults
+    
+answer_extractor:
+  - name: match_multi-choice_and_open-ended
+    function: regex_match_multi_open
+    args:
+      match_index: -1   # Index for multiple choice
+metrics:
+  - name: accuracy
+    function: accuracy
+    args:
+overall_metrics:
+  - name: average
+    function: average_across_tasks
+    args:
+      null
+  

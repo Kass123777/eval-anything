@@ -8,42 +8,18 @@
     task_uid: 111
     # benchmark name and task name, if the task list is empty, all tasks will be evaluated
     benchmarks: {
-      "gsm8k": ["main"],
-      "mmlu": ["global_facts"],
-      "HumanEval": ["openai_humaneval"],
-      "AGIEval": ['aqua-rat', 'gaokao-biology', 'gaokao-chemistry', 'gaokao-chinese', 'gaokao-english', 'gaokao-geography', 'gaokao-history', 'gaokao-mathcloze', 'gaokao-mathqa', 'gaokao-physics', 'jec-qa-ca', 'jec-qa-kd', 'logiqa-en', 'logiqa-zh', 'lsat-ar', 'lsat-lr', 'lsat-rc', 'math', 'sat-en', 'sat-en-without-passage', 'sat-math'],
-      "TruthfulQA": ["generation"],
-      "ARC": ["ARC-Challenge", "ARC-Easy"],
-      "CMMLU": ['agronomy', 'anatomy', 'ancient_chinese', 'arts', 'astronomy', 'business_ethics', 'chinese_civil_service_exam', 'chinese_driving_rule', 'chinese_food_culture', 'chinese_foreign_policy', 'chinese_history', 'chinese_literature', 'chinese_teacher_qualification', 'clinical_knowledge', 'college_actuarial_science', 'college_education', 'college_engineering_hydrology', 'college_law', 'college_mathematics', 'college_medical_statistics', 'college_medicine', 'computer_science', 'computer_security', 'conceptual_physics', 'construction_project_management', 'economics', 'education', 'electrical_engineering', 'elementary_chinese', 'elementary_commonsense', 'elementary_information_and_technology', 'elementary_mathematics', 'ethnology', 'food_science', 'genetics', 'global_facts', 'high_school_biology', 'high_school_chemistry', 'high_school_geography', 'high_school_mathematics', 'high_school_physics', 'high_school_politics', 'human_sexuality', 'international_law', 'journalism', 'jurisprudence', 'legal_and_moral_basis', 'logical', 'machine_learning', 'management', 'marketing', 'marxist_theory', 'modern_chinese', 'nutrition', 'philosophy', 'professional_accounting', 'professional_law', 'professional_medicine', 'professional_psychology', 'public_relations', 'security_study', 'sociology', 'sports_science', 'traditional_chinese_medicine', 'virology', 'world_history', 'world_religions'],
-      "MMLUPRO": ["default"],
-      "CEval": ['accountant', 'advanced_mathematics', 'art_studies', 'basic_medicine', 'business_administration', 'chinese_language_and_literature', 'civil_servant', 'clinical_medicine', 'college_chemistry', 'college_economics', 'college_physics', 'college_programming', 'computer_architecture', 'computer_network', 'discrete_mathematics', 'education_science', 'electrical_engineer', 'environmental_impact_assessment_engineer', 'fire_engineer', 'high_school_biology', 'high_school_chemistry', 'high_school_chinese', 'high_school_geography', 'high_school_history', 'high_school_mathematics', 'high_school_physics', 'high_school_politics', 'ideological_and_moral_cultivation', 'law', 'legal_professional', 'logic', 'mao_zedong_thought', 'marxism', 'metrology_engineer', 'middle_school_biology', 'middle_school_chemistry', 'middle_school_geography', 'middle_school_history', 'middle_school_mathematics', 'middle_school_physics', 'middle_school_politics', 'modern_chinese_history', 'operating_system', 'physician', 'plant_protection', 'probability_and_statistics', 'professional_tour_guide', 'sports_science', 'tax_accountant', 'teacher_qualification', 'urban_and_rural_planner', 'veterinary_medicine']
-      "mmmu": ["Accounting"],
+      # "mmau": ["MMAU-mini"],
+      "mmvu": ["default"],
       }
     # Num shot
     n_shot: {
-      "gsm8k": 5,
-      "mmlu": 0,
-      "HumanEval": 0,
-      "AGIEval": 5,
-      "TruthfulQA": 6,
-      "ARC": 0,
-      "CMMLU": 5,
-      "MMLUPRO": 8,
-      "CEval": 5,
-      "mmmu": 5,
+      "mmau": 0,
+      "mmvu": 0,
       }
     # Chain of thought
     cot: {
-      "gsm8k": True,
-      "mmlu": True,
-      "HumanEval": False,
-      "AGIEval": False,
-      "TruthfulQA": False,
-      "ARC": False,
-      "CMMLU": False,
-      "MMLUPRO": True,
-      "CEval": False,
-      "mmmu": False,
+      "mmau": False,
+      "mmvu": False,
       }
     # Visualization
     visualization:
@@ -53,9 +29,9 @@
   # The model configurations
   model_cfgs:
     # Pretrained model unique identity
-    model_id: Llava-1.5-7B-HF
+    model_id: Qwen2.5-VL-7B-Instruct
     # Pretrained model name or path
-    model_name_or_path: /aifs4su/yaodong/models/llava-1.5-7b-hf
+    model_name_or_path: Qwen/Qwen2.5-VL-7B-Instruct
     # Model type ("LM" or "MM")
     model_type: "MM"
     # Chat template
@@ -86,9 +62,9 @@
     # Beam Search size
     num_beams: null
     # Number of GPUs
-    num_gpu: 8
+    num_gpu: 4
     # Available GPU IDs. If not specified, first num_gpu GPUs will be used.
     gpu_ids: [0,1,2,3,4,5,6,7]
     # GPU utilization
-    gpu_utilization: 0.8
+    gpu_utilization: 0.6
     
